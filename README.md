@@ -8,6 +8,8 @@ This repository contains code (training / metrics / plotting) to investigate dis
 * **FactorVAE** from [Disentangling by Factorising](https://arxiv.org/abs/1802.05983)
 * **β-TCVAE** from [Isolating Sources of Disentanglement in Variational Autoencoders](https://arxiv.org/abs/1802.04942)
 
+test
+
 Notes:
 - Tested for python >= 3.6
 - Tested for CPU and GPU
