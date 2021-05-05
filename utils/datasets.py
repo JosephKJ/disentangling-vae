@@ -54,7 +54,7 @@ def get_dataloaders(dataset, root=None, shuffle=True, pin_memory=True,
 
     Parameters
     ----------
-    dataset : {"mnist", "fashion", "dsprites", "celeba", "chairs", "cifar10"}
+    dataset : {"mnist", "fashion", "dsprites", "celeba", "chairs", "cifar10", "cifar100"}
         Name of the dataset to load
 
     root : str
@@ -388,7 +388,7 @@ class CIFAR10(datasets.CIFAR10):
     """Wrapper for CIFAR10 dataset
 
     """
-    img_size = (1, 32, 32)
+    img_size = (3, 32, 32)
     background_color = COLOUR_BLACK
 
     def __init__(self, root=os.path.join(DIR, '../data/CIFAR10'), **kwargs):
@@ -405,7 +405,7 @@ class CIFAR100(datasets.CIFAR100):
     """Wrapper for CIFAR100 dataset
 
     """
-    img_size = (1, 32, 32)
+    img_size = (3, 32, 32)
     background_color = COLOUR_BLACK
 
     def __init__(self, root=os.path.join(DIR, '../data/CIFAR100'), **kwargs):
