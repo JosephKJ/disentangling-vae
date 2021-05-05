@@ -22,7 +22,9 @@ DATASETS_DICT = {"mnist": "MNIST",
                  "fashion": "FashionMNIST",
                  "dsprites": "DSprites",
                  "celeba": "CelebA",
-                 "chairs": "Chairs"}
+                 "chairs": "Chairs",
+                 "cifar10": "CIFAR10",
+                 "cifar100": "CIFAR100"}
 DATASETS = list(DATASETS_DICT.keys())
 
 
@@ -52,7 +54,7 @@ def get_dataloaders(dataset, root=None, shuffle=True, pin_memory=True,
 
     Parameters
     ----------
-    dataset : {"mnist", "fashion", "dsprites", "celeba", "chairs"}
+    dataset : {"mnist", "fashion", "dsprites", "celeba", "chairs", "cifar10"}
         Name of the dataset to load
 
     root : str
@@ -381,6 +383,39 @@ class FashionMNIST(datasets.FashionMNIST):
                              transforms.ToTensor()
                          ]))
 
+
+class CIFAR10(datasets.CIFAR10):
+    """Wrapper for CIFAR10 dataset
+
+    """
+    img_size = (1, 32, 32)
+    background_color = COLOUR_BLACK
+
+    def __init__(self, root=os.path.join(DIR, '../data/CIFAR10'), **kwargs):
+        super().__init__(root,
+                         train=True,
+                         download=True,
+                         transform=transforms.Compose([
+                             transforms.Resize(32),
+                             transforms.ToTensor()
+                         ]))
+
+
+class CIFAR100(datasets.CIFAR100):
+    """Wrapper for CIFAR100 dataset
+
+    """
+    img_size = (1, 32, 32)
+    background_color = COLOUR_BLACK
+
+    def __init__(self, root=os.path.join(DIR, '../data/CIFAR100'), **kwargs):
+        super().__init__(root,
+                         train=True,
+                         download=True,
+                         transform=transforms.Compose([
+                             transforms.Resize(32),
+                             transforms.ToTensor()
+                         ]))
 
 # HELPERS
 def preprocess(root, size=(64, 64), img_format='JPEG', center_crop=None):
