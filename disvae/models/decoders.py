@@ -15,7 +15,7 @@ def get_decoder(model_type):
 
 class DecoderBurgess(nn.Module):
     def __init__(self, img_size,
-                 latent_dim=10):
+                 latent_dim=10, is_cifar=True):
         r"""Decoder of the model proposed in [1].
 
         Parameters
@@ -48,6 +48,7 @@ class DecoderBurgess(nn.Module):
         self.reshape = (hid_channels, kernel_size, kernel_size)
         n_chan = self.img_size[0]
         self.img_size = img_size
+        self.is_cifar = is_cifar
 
         # Fully connected layers
         self.lin1 = nn.Linear(latent_dim, hidden_dim)
@@ -57,7 +58,7 @@ class DecoderBurgess(nn.Module):
         # Convolutional layers
         cnn_kwargs = dict(stride=2, padding=1)
         # If input image is 64x64 do fourth convolution
-        if self.img_size[1] == self.img_size[2] == 64:
+        if self.img_size[1] == self.img_size[2] == 64 or self.is_cifar:
             self.convT_64 = nn.ConvTranspose2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
 
         self.convT1 = nn.ConvTranspose2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
@@ -74,8 +75,9 @@ class DecoderBurgess(nn.Module):
         x = x.view(batch_size, *self.reshape)
 
         # Convolutional layers with ReLu activations
-        if self.img_size[1] == self.img_size[2] == 64:
+        if self.img_size[1] == self.img_size[2] == 64 or self.is_cifar:
             x = torch.relu(self.convT_64(x))
+            print('Adding Layers')
         x = torch.relu(self.convT1(x))
         x = torch.relu(self.convT2(x))
         # Sigmoid activation for final conv layer
