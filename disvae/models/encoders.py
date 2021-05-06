@@ -76,6 +76,7 @@ class EncoderBurgess(nn.Module):
         x = torch.relu(self.conv3(x))
         if self.img_size[1] == self.img_size[2] == 64 or self.is_cifar:
             x = torch.relu(self.conv_64(x))
+            print('Adding layers')
 
         # Fully connected layers with ReLu activations
         x = x.view((batch_size, -1))
