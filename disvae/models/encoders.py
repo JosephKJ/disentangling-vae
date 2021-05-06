@@ -15,7 +15,7 @@ def get_encoder(model_type):
 
 class EncoderBurgess(nn.Module):
     def __init__(self, img_size,
-                 latent_dim=10, is_cifar=True):
+                 latent_dim=10):
         r"""Encoder of the model proposed in [1].
 
         Parameters
@@ -40,12 +40,11 @@ class EncoderBurgess(nn.Module):
         super(EncoderBurgess, self).__init__()
 
         # Layer parameters
-        hid_channels = 32
+        hid_channels = 64
         kernel_size = 4
-        hidden_dim = 256
+        hidden_dim = 512
         self.latent_dim = latent_dim
         self.img_size = img_size
-        self.is_cifar = is_cifar
         # Shape required to start transpose convs
         self.reshape = (hid_channels, kernel_size, kernel_size)
         n_chan = self.img_size[0]
@@ -57,7 +56,7 @@ class EncoderBurgess(nn.Module):
         self.conv3 = nn.Conv2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
 
         # If input image is 64x64 do fourth convolution
-        if self.img_size[1] == self.img_size[2] == 64 or self.is_cifar:
+        if self.img_size[1] == self.img_size[2] == 64:
             self.conv_64 = nn.Conv2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
 
         # Fully connected layers
@@ -74,9 +73,8 @@ class EncoderBurgess(nn.Module):
         x = torch.relu(self.conv1(x))
         x = torch.relu(self.conv2(x))
         x = torch.relu(self.conv3(x))
-        if self.img_size[1] == self.img_size[2] == 64 or self.is_cifar:
+        if self.img_size[1] == self.img_size[2] == 64:
             x = torch.relu(self.conv_64(x))
-            print('Adding layers')
 
         # Fully connected layers with ReLu activations
         x = x.view((batch_size, -1))
