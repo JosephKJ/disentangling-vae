@@ -24,7 +24,8 @@ DATASETS_DICT = {"mnist": "MNIST",
                  "celeba": "CelebA",
                  "chairs": "Chairs",
                  "cifar10": "CIFAR10",
-                 "cifar100": "CIFAR100"}
+                 "cifar100": "CIFAR100",
+                 "imagenet": "ImageNet"}
 DATASETS = list(DATASETS_DICT.keys())
 
 
@@ -414,6 +415,22 @@ class CIFAR100(datasets.CIFAR100):
                          download=True,
                          transform=transforms.Compose([
                              transforms.Resize(32),
+                             transforms.ToTensor()
+                         ]))
+
+class ImageNet(datasets.ImageNet):
+    """Wrapper for ImageNet dataset
+
+    """
+    img_size = (3, 64, 64)
+    background_color = COLOUR_BLACK
+
+    def __init__(self, root=os.path.join(DIR, '../data/ImageNet'), **kwargs):
+        super().__init__(root,
+                         train=True,
+                         download=True,
+                         transform=transforms.Compose([
+                             transforms.Resize(64),
                              transforms.ToTensor()
                          ]))
 
