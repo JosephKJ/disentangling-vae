@@ -429,7 +429,7 @@ class ImageNet(datasets.ImageNet):
         super().__init__(root,
                          split='train',
                          transform=transforms.Compose([
-                             transforms.Resize(64),
+                             transforms.Resize((64, 64)),
                              transforms.ToTensor()
                          ]))
 
