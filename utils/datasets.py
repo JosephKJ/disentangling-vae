@@ -422,14 +422,14 @@ class ImageNet(datasets.ImageNet):
     """Wrapper for ImageNet dataset
 
     """
-    img_size = (3, 64, 64)
+    img_size = (3, 128, 128)
     background_color = COLOUR_BLACK
 
     def __init__(self, root=os.path.join(DIR, '../data/ImageNet'), **kwargs):
         super().__init__(root,
                          split='train',
                          transform=transforms.Compose([
-                             transforms.Resize((64, 64)),
+                             transforms.Resize((128, 128)),
                              transforms.ToTensor()
                          ]))
 

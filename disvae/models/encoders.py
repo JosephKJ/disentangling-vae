@@ -59,6 +59,11 @@ class EncoderBurgess(nn.Module):
         if self.img_size[1] == self.img_size[2] == 64:
             self.conv_64 = nn.Conv2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
 
+        if self.img_size[1] == self.img_size[2] == 128:
+            self.conv_64 = nn.Conv2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
+            self.conv_128 = nn.Conv2d(hid_channels, hid_channels, kernel_size, **cnn_kwargs)
+
+
         # Fully connected layers
         self.lin1 = nn.Linear(np.product(self.reshape), hidden_dim)
         self.lin2 = nn.Linear(hidden_dim, hidden_dim)
@@ -75,6 +80,9 @@ class EncoderBurgess(nn.Module):
         x = torch.relu(self.conv3(x))
         if self.img_size[1] == self.img_size[2] == 64:
             x = torch.relu(self.conv_64(x))
+        if self.img_size[1] == self.img_size[2] == 128:
+            x = torch.relu(self.conv_64(x))
+            x = torch.relu(self.conv_128(x))
 
         # Fully connected layers with ReLu activations
         x = x.view((batch_size, -1))
