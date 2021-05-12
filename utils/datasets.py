@@ -428,7 +428,7 @@ class ImageNet(datasets.ImageNet):
     def __init__(self, root=os.path.join(DIR, '../data/ImageNet'), **kwargs):
         super().__init__(root,
                          train=True,
-                         download=True,
+                         download=False,
                          transform=transforms.Compose([
                              transforms.Resize(64),
                              transforms.ToTensor()
