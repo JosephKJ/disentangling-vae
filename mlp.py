@@ -4,11 +4,11 @@ import os
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
-train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/training_features/'
-test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/testing_features/'
+# train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/training_features/'
+# test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/testing_features/'
 
-# train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/training_features/'
-# test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/testing_features/'
+train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/training_features/'
+test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/testing_features/'
 
 
 # train_path = '/home/joseph/workspace/disentangling-vae/neo_results/VAE_cifar10/training_features/'
