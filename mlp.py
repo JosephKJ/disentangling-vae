@@ -4,8 +4,8 @@ import os
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
-train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_beta_h/training_features/'
-test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_beta_h/testing_features/'
+train_path = '/home/josephkj_google_com/workspace/disentangling-vae/results/VAE_mnist/training_features/'
+test_path = '/home/josephkj_google_com/workspace/disentangling-vae/results/VAE_mnist/testing_features/'
 
 # train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/training_features/'
 # test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/testing_features/'
