@@ -24,7 +24,7 @@ for file in os.listdir(train_path):
 
 print('Loaded the data.')
 
-clf = MLPClassifier(random_state=1, max_iter=300)
+clf = MLPClassifier(random_state=1, max_iter=300, hidden_layer_sizes=(50,))
 clf.fit(X, y)
 
 print('Fit the data.')
