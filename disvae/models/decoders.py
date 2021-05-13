@@ -40,9 +40,9 @@ class DecoderBurgess(nn.Module):
         super(DecoderBurgess, self).__init__()
 
         # Layer parameters
-        hid_channels = 64
+        hid_channels = 32
         kernel_size = 4
-        hidden_dim = 512
+        hidden_dim = 256
         self.img_size = img_size
         # Shape required to start transpose convs
         self.reshape = (hid_channels, kernel_size, kernel_size)
