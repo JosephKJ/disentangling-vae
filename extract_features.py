@@ -182,7 +182,7 @@ def main(args):
     set_seed(args.seed)
     device = get_device(is_gpu=not args.no_cuda)
     exp_dir = os.path.join(RES_DIR, args.name)
-    feature_dir = os.path.join(exp_dir, 'testing_features')
+    feature_dir = os.path.join(exp_dir, 'training_features')
     logger.info("Root directory for saving and loading experiments: {}".format(exp_dir))
 
     if not args.is_eval_only:
@@ -195,7 +195,7 @@ def main(args):
         # PREPARES DATA
         data_loader = get_dataloaders(args.dataset,
                                        batch_size=args.batch_size,
-                                       logger=logger, test=True)
+                                       logger=logger, test=False)
         logger.info("Train {} with {} samples".format(args.dataset, len(data_loader.dataset)))
 
         # PREPARES MODEL
