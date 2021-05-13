@@ -4,11 +4,14 @@ import os
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
+train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_beta_h/training_features/'
+test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_beta_h/testing_features/'
+
 # train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/training_features/'
 # test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_btcvae/testing_features/'
 
-train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/training_features/'
-test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/testing_features/'
+# train_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/training_features/'
+# test_path = '/home/josephkj_google_com/workspace/disentangling-vae/neo_results/cifar_10_vae/testing_features/'
 
 
 # train_path = '/home/joseph/workspace/disentangling-vae/neo_results/VAE_cifar10/training_features/'
@@ -24,7 +27,7 @@ for file in os.listdir(train_path):
 
 print('Loaded the data.')
 
-clf = MLPClassifier(random_state=1, max_iter=300, hidden_layer_sizes=(50,))
+clf = MLPClassifier(random_state=1, max_iter=300)
 clf.fit(X, y)
 
 print('Fit the data.')
