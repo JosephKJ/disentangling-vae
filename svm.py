@@ -11,7 +11,7 @@ X = []
 y = []
 for file in os.listdir(train_path):
     label = file.split('_')[1]
-    z = torch.load(os.path.join(train_path, file))
+    z = torch.load(os.path.join(train_path, file)).detach().numpy()
     X.append(z)
     y.append(label)
 
@@ -26,7 +26,7 @@ X_test = []
 y_test = []
 for file in os.listdir(test_path):
     label = file.split('_')[1]
-    z = torch.load(os.path.join(test_path, file))
+    z = torch.load(os.path.join(test_path, file)).detach().numpy()
     X_test.append(z)
     y_test.append(label)
 
