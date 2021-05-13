@@ -360,9 +360,9 @@ class MNIST(datasets.MNIST):
     img_size = (1, 32, 32)
     background_color = COLOUR_BLACK
 
-    def __init__(self, root=os.path.join(DIR, '../data/mnist'), **kwargs):
+    def __init__(self, root=os.path.join(DIR, '../data/mnist'), is_test=False, **kwargs):
         super().__init__(root,
-                         train=True,
+                         train=not is_test,
                          download=True,
                          transform=transforms.Compose([
                              transforms.Resize(32),
