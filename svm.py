@@ -15,7 +15,7 @@ for file in os.listdir(train_path):
     X.append(z)
     y.append(label)
 
-print(X)
+# print(X)
 
 print(X.shape)
 
