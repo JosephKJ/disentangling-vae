@@ -14,6 +14,87 @@ from disvae.utils.modelIO import save_model
 TRAIN_LOSSES_LOGFILE = "train_losses.log"
 
 
+class FeatureExtractor():
+    """
+    Class to handle training of model.
+
+    Parameters
+    ----------
+    model: disvae.vae.VAE
+
+    optimizer: torch.optim.Optimizer
+
+    loss_f: disvae.models.BaseLoss
+        Loss function.
+
+    device: torch.device, optional
+        Device on which to run the code.
+
+    logger: logging.Logger, optional
+        Logger.
+
+    save_dir : str, optional
+        Directory for saving logs.
+
+    gif_visualizer : viz.Visualizer, optional
+        Gif Visualizer that should return samples at every epochs.
+
+    is_progress_bar: bool, optional
+        Whether to use a progress bar for training.
+    """
+
+    def __init__(self, model,
+                 device=torch.device("cpu"),
+                 logger=logging.getLogger(__name__),
+                 save_dir="results",
+                 gif_visualizer=None,
+                 is_progress_bar=True):
+
+        self.device = device
+        self.model = model.to(self.device)
+        self.save_dir = save_dir
+        self.is_progress_bar = is_progress_bar
+        self.logger = logger
+        self.losses_logger = LossesLogger(os.path.join(self.save_dir, TRAIN_LOSSES_LOGFILE))
+        self.gif_visualizer = gif_visualizer
+        self.logger.info("Training Device: {}".format(self.device))
+
+    def __call__(self, data_loader,
+                 epochs=10,
+                 checkpoint_every=10, feature_dir=None):
+        """
+        Trains the model.
+
+        Parameters
+        ----------
+        data_loader: torch.utils.data.DataLoader
+
+        epochs: int, optional
+            Number of epochs to train the model for.
+
+        checkpoint_every: int, optional
+            Save a checkpoint of the trained model every n epoch.
+        """
+        start = default_timer()
+        self.model.train()
+        for epoch in range(epochs):
+            storer = defaultdict(list)
+            self._get_features(data_loader, feature_dir, storer, epoch)
+
+        if self.gif_visualizer is not None:
+            self.gif_visualizer.save_reset()
+
+        self.model.eval()
+
+        delta_time = (default_timer() - start) / 60
+        self.logger.info('Finished training after {:.1f} min.'.format(delta_time))
+
+    def _get_features(self, data_loader, feature_dir, storer, epoch):
+        for idx, (data, y) in enumerate(data_loader):
+            _, _, latent_sample = self.model(data)
+            torch.save(latent_sample, os.path.join(feature_dir, str(idx) + '_' + str(y[0].item()) + '.pt'))
+
+
 class Trainer():
     """
     Class to handle training of model.
