@@ -182,7 +182,7 @@ def main(args):
     set_seed(args.seed)
     device = get_device(is_gpu=not args.no_cuda)
     exp_dir = os.path.join(RES_DIR, args.name)
-    feature_dir = os.path.join(exp_dir, 'features')
+    feature_dir = os.path.join(exp_dir, 'testing_features')
     logger.info("Root directory for saving and loading experiments: {}".format(exp_dir))
 
     if not args.is_eval_only:
@@ -193,23 +193,23 @@ def main(args):
         args.batch_size = 1
 
         # PREPARES DATA
-        train_loader = get_dataloaders(args.dataset,
+        data_loader = get_dataloaders(args.dataset,
                                        batch_size=args.batch_size,
-                                       logger=logger)
-        logger.info("Train {} with {} samples".format(args.dataset, len(train_loader.dataset)))
+                                       logger=logger, test=True)
+        logger.info("Train {} with {} samples".format(args.dataset, len(data_loader.dataset)))
 
         # PREPARES MODEL
         args.img_size = get_img_size(args.dataset)  # stores for metadata
         model = load_model(exp_dir, filename='model.pt')
         logger.info('Num parameters in model: {}'.format(get_n_param(model)))
 
-        # TRAINS
+        # Extract Features
 
         model = model.to(device)  # make sure trainer and viz on same device
         fe = FeatureExtractor(model,
                           save_dir=exp_dir,
                           is_progress_bar=not args.no_progress_bar)
-        fe(train_loader,
+        fe(data_loader,
                 epochs=args.epochs,
                 checkpoint_every=args.checkpoint_every, feature_dir=feature_dir)
 
